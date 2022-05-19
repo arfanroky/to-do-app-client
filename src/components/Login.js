@@ -1,44 +1,38 @@
 import React from 'react';
 import { useSignInWithGoogle } from 'react-firebase-hooks/auth';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import auth from '../../firebase.init';
-
-
+import auth from '../firebase.init';
 
 const Login = () => {
-    const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
+  const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
+  let navigate = useNavigate();
+  let location = useLocation();
 
-    let navigate = useNavigate();
-    let location = useLocation();
-  
-    let from = location.state?.from?.pathname || "/";
+  let from = location.state?.from?.pathname || '/';
 
-    if(user){
-        navigate(from, {replace:true});
-    }
-  
+  if (user) {
+    navigate(from, { replace: true });
+  }
 
-    if(loading){
-        return <p>Loading.......</p>
-    }
+  if (loading) {
+    return <p>Loading.......</p>;
+  }
 
-    if(error){
-        toast.error(error)
-    }
+  if (error) {
+    toast.error(error);
+  }
 
-
-    return (
-        <div className='w-full py-2 flex justify-center items-center h-screen'>
-            <div>
-                 <button 
-                    onClick={() => signInWithGoogle()}
-                    className='btn'>Sign In With Google</button> :
-                
-            </div>
-            
-        </div>
-    );
+  return (
+    <div className="w-full py-2 flex justify-center items-center h-screen">
+      <div>
+        <button onClick={() => signInWithGoogle()} className="btn">
+          Sign In With Google
+        </button>{' '}
+        :
+      </div>
+    </div>
+  );
 };
 
 export default Login;
